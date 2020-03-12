@@ -8,6 +8,7 @@ package learnaccess;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +19,8 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    AccessManipulator AM = new AccessManipulator();
+    boolean isGenerated=false;
     public MainFrame() {
         initComponents();
     }
@@ -33,26 +36,23 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         CreateNewDB1 = new javax.swing.JButton();
-        BorshButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        GenerateButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        CreateNewDB1.setText("CreateNewDB1");
+        CreateNewDB1.setText("Create New DB");
         CreateNewDB1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreateNewDB1ActionPerformed(evt);
             }
         });
 
-        BorshButton.setText("BorshButton");
-        BorshButton.addActionListener(new java.awt.event.ActionListener() {
+        GenerateButton.setText("Generate Computers");
+        GenerateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BorshButtonActionPerformed(evt);
+                GenerateButtonActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Кто ел борщ?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -60,25 +60,19 @@ public class MainFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(CreateNewDB1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
-                .addComponent(BorshButton)
-                .addGap(182, 182, 182))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(241, 241, 241)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(CreateNewDB1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CreateNewDB1)
-                    .addComponent(BorshButton))
-                .addGap(127, 127, 127)
-                .addComponent(jLabel1)
-                .addContainerGap(199, Short.MAX_VALUE))
+                    .addComponent(CreateNewDB1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -87,7 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,24 +93,26 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BorshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorshButtonActionPerformed
-        AccessManipulator AM = new AccessManipulator();
-        try {
-            String text = AM.findBorshEater() + " съел БАСКЕТ ДУЕТ";
-            jLabel1.setText(text);
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_BorshButtonActionPerformed
-
     private void CreateNewDB1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateNewDB1ActionPerformed
-        AccessManipulator AM = new AccessManipulator();
+        if (isGenerated){
         try {
             AM.createSimpleDB();
+            JOptionPane.showMessageDialog(rootPane, "Готово!");
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Сгенерируйте таблицы!");
+        }
     }//GEN-LAST:event_CreateNewDB1ActionPerformed
+
+    private void GenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateButtonActionPerformed
+        if (!isGenerated){
+        AM.generate();
+        isGenerated = true;
+        JOptionPane.showMessageDialog(rootPane, "Сгенерировано!");
+        } 
+    }//GEN-LAST:event_GenerateButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,9 +150,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BorshButton;
     private javax.swing.JButton CreateNewDB1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton GenerateButton;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

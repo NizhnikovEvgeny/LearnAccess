@@ -5,6 +5,9 @@
  */
 package learnaccess;
 
+import Comps.CPU;
+import Comps.GPU;
+
 /**
  *
  * @author Женя
@@ -15,6 +18,8 @@ public class LearnAccess {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        AccessManipulator am = new AccessManipulator();
+        am.out();
         MainFrame mf = new MainFrame();
         mf.setVisible(true);
     }
